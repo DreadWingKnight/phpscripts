@@ -17,7 +17,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 $sources = array();
 $querystring = '';
-$include('configure.php');
+require_once('configure.php');
 
 /*
 // Example entry for flatfile storage:

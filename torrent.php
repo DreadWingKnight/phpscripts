@@ -16,7 +16,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 */
 
 $torrentphp = true;
-include("trackers.php");
+require_once("trackers.php");
+require_once('configure.php');
 require_once("BEncode.php");
 require_once("BDecode.php");
 
@@ -151,11 +152,11 @@ if( !isset($torrentcontent['info']['files']) )
 {
 	if( count($sources[$torrentcontent['info']['name']]['sources'] ) != 0 )
 	{
-		if( count($sources[$torrentcontent['info']['name']]['sources'] ) < 5 )
+		if( count($sources[$torrentcontent['info']['name']]['sources'] ) < $maxsources )
 			$torrentcontent['sources'] = $sources[$torrentcontent['info']['name']]['sources'];
 		else
 		{
-			$outputindex = array_rand($sources[$torrentcontent['info']['name']]['sources'],5);
+			$outputindex = array_rand($sources[$torrentcontent['info']['name']]['sources'],$maxsources);
 			foreach( $outputindex as $key )
 				$torrentcontent['sources'][] = $sources[$torrentcontent['info']['name']]['sources'][$key];
 		}
