@@ -22,4 +22,6 @@ $mysqluser = '<Mysql Username>';
 $mysqlpass = '<Mysql Password>';
 $mysql_database = '<Mysql Database>';
 
+// Default maximum sources returned with torrent.php is 5
+$maxsources = 5; 
 ?>
