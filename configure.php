@@ -1,6 +1,6 @@
 <?
 /*
-Copyright (c) 2006, Depthstrike Entertainment.
+Copyright (c) 2006-2014, Depthstrike Entertainment.
 Module Author - Harold Feit - dwknight@depthstrike.com
 All rights reserved.
 
@@ -24,4 +24,6 @@ $mysql_database = '<Mysql Database>';
 
 // Default maximum sources returned with torrent.php is 5
 $maxsources = 5; 
+
+// Torrent info dictionaries can be stored in a MySQL database.
 ?>

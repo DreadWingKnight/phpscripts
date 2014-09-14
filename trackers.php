@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 2006, Depthstrike Entertainment.
+Copyright (c) 2006-2014, Depthstrike Entertainment.
 Module Author - Harold Feit - dwknight@depthstrike.com
 All rights reserved.
 
