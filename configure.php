@@ -25,5 +25,6 @@ $mysql_database = '<Mysql Database>';
 // Default maximum sources returned with torrent.php is 5
 $maxsources = 5; 
 
-// Torrent info dictionaries can be stored in a MySQL database.
+// Torrent info dictionaries can be stored in a MySQL database, disabled by default. Enabling this disables some functions of the script such as crc/file sub-identifier requirement.
+$infomysql = false;
 ?>

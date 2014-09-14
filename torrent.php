@@ -53,9 +53,11 @@ if ( empty($_GET) && empty($_SERVER['PATH_INFO']) ) {
 	exit;
 }
 
-if (empty($torrentcrc) && $requireid == true ) {
-	echo 'Error 0001 - Torrent CRC/identifier code not specified.';
-	exit;
+if (!$infomysql){
+	if (empty($torrentcrc) && $requireid == true ) {
+		echo 'Error 0001 - Torrent CRC/identifier code not specified.';
+		exit;
+	}
 }
 
 if (empty($numtorrents) && $overridenumtorrents != true ){
@@ -72,40 +74,71 @@ if ($overridenumtorrents == true) {
 	$numtorrents = count($trackers);
 }
 
-if (empty($torrentcrc) && $requireid != true) {
-	$torrentfull = $torrentfilename;
+if (!$infomysql)
+	{
+		if (empty($torrentcrc) && $requireid != true) {
+			$torrentfull = $torrentfilename;
+			}
+		else {
+			$torrentfull = $torrentcrc.'/'.$torrentfilename;
+		}
+
+		if (!file_exists($torrentfull)) {
+			header('HTTP/1.0 404 Not Found');
+			header('Content-Type: text/plain');
+			echo("The torrent file specified in the torrentname= paramater does not exist on this server\n");
+			echo("Please verify the link or contact site administration\n");
+			echo("Debug information: \n");
+			echo("Torrent Full Path: $torrentfull \n");
+			echo("Torrent CRC/ID: $torrentcrc \n");
+			echo("Torrent Filename: $torrentfilename \n");
+			print_r($splitpath);
+			exit;
+		}
+
+		$fd = fopen($torrentfull, "rb");
+		$stream = fread($fd, filesize($torrentfull));
+		fclose($fd);
+		// Convert BEncoded torrent data to PHP-readable arrays
+		$torrentcontent = BDecode($stream);
+
+		// Remove excess torrent internal data.
+		// Removes Announce-List
+		unset($torrentcontent['announce-list']);
+
+		// Removes Azureus-inserted Resume Data
+		unset($torrentcontent['resume']);
+		unset($torrentcontent['tracker_cache']);
+		unset($torrentcontent['torrent filename']);
+
 	}
-else {
-	$torrentfull = $torrentcrc.'/'.$torrentfilename;
+else
+{
+	$sourcedb = mysql_connect( $mysqlserver, $mysqluser, $mysqlpass);
+	if( !$sourcedb )
+		echo "MySQL server did not connect - ".mysql_error()."<br>";
+	if( !mysql_select_db($mysql_database) )
+		echo "MySQL database did not select- ".mysql_error()."<br>";
+	$infoquery = "SELECT * FROM torrentinfo WHERE torrentname = '".$torrentfilename."'";
+	$sourcequery = mysql_query($infoquery, $sourcedb );
+	$torrentcontent = mysql_fetch_assoc($sourcequery);
+	if(!isset($torrentcontent['info'])
+		{	
+			header('HTTP/1.0 404 Not Found');
+			header('Content-Type: text/plain');
+			echo("The torrent file specified in the torrentname= paramater does not exist on this server\n");
+			echo("Please verify the link or contact site administration\n");
+			echo("Debug information: \n");
+			echo("Torrent Full Path: $torrentfull \n");
+			echo("Torrent CRC/ID: $torrentcrc \n");
+			echo("Torrent Filename: $torrentfilename \n");
+			print_r($splitpath);
+			exit;
+		}
+	unset($torrentcontent['torrentname']);
+	unset($torrentcontent['dbindex']);
 }
 
-if (!file_exists($torrentfull)) {
-	header('HTTP/1.0 404 Not Found');
-	header('Content-Type: text/plain');
-	echo("The torrent file specified in the torrentname= paramater does not exist on this server\n");
-	echo("Please verify the link or contact site administration\n");
-	echo("Debug information: \n");
-	echo("Torrent Full Path: $torrentfull \n");
-	echo("Torrent CRC/ID: $torrentcrc \n");
-	echo("Torrent Filename: $torrentfilename \n");
-	print_r($splitpath);
-	exit;
-}
-
-$fd = fopen($torrentfull, "rb");
-$stream = fread($fd, filesize($torrentfull));
-fclose($fd);
-// Convert BEncoded torrent data to PHP-readable arrays
-$torrentcontent = BDecode($stream);
-
-// Remove excess torrent internal data.
-// Removes Announce-List
-unset($torrentcontent['announce-list']);
-
-// Removes Azureus-inserted Resume Data
-unset($torrentcontent['resume']);
-unset($torrentcontent['tracker_cache']);
-unset($torrentcontent['torrent filename']);
 
 $announcearray[] = $trackers;
 if ($parser != true) {
