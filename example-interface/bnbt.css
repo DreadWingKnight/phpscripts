@@ -1,0 +1,114 @@
+	body
+	{
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 12pt;
+	}
+
+	table
+	{
+		border: 2px;
+	}
+
+	tr.even
+	{
+		background-color: #ffffff;
+	}
+
+	tr.odd
+	{
+		background-color: #eeeeee;
+	}
+
+	th
+	{
+		background-color: #eeeeff;
+		border: solid 1px;
+		font-size: 10pt;
+	}
+
+	td
+	{
+		border: solid 1px;
+		font-size: 8pt;
+		padding: 3px;
+	}
+
+	td.hashes
+	{
+		font-size: 8pt;
+	}
+	th.hashes
+	{
+		font-size: 8pt;
+	}
+
+	td.number
+	{
+		text-align: right;
+	}
+
+	td.number_red
+	{
+		color: #a00000;
+		font-weight: bold;
+		text-align: right;
+	}
+
+	td.number_yellow
+	{
+		color: #a0a000;
+		font-weight: bold;
+		text-align: right;
+	}
+
+	td.number_green
+	{
+		color: #00a000;
+		font-weight: bold;
+		text-align: right;
+	}
+
+	td.bytes
+	{
+		text-align: right;
+	}
+
+	td.com_header
+	{
+		background-color: #eeeeff;
+		font-size: 12px;
+	}
+
+	td.com_body
+	{
+		background-color: #eeeeee;
+		border: solid 1px;
+		border-color: #000000;
+		font-size: 12pt;
+	}
+
+	td.percent
+	{
+		text-align: center;
+	}
+
+	td.download
+	{
+		text-align: center;
+	}
+
+	a.sort
+	{
+		font-size: 10px;
+		text-decoration: none;
+	}
+
+	p.login
+	{
+	display: none;		
+	}
+
+	p.denied
+	{
+	display: none;
+	}

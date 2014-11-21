@@ -1,0 +1,3 @@
+<?
+$downloads[] = array( 'name' => 'ABC - Another BitTorrent Client', 'address'=> 'http://pingpong-abc.sf.net' , 'logo' => 'abc.gif', 'version' => '3.1 - Installer', 'torrent' => 'ABC-win32-v3.1.exe.torrent', 'showtorrent' => 1, 'usetphp' => 1 , 'mirrors' => array ('SourceForge HTTP' => 'http://prdownloads.sourceforge.net/pingpong-abc/ABC-win32-v3.1.exe') , 'magnetsources' => array( 'http://sources.depthstrike.com:44522/sfsource/pingpong-abc/ABC-win32-v3.1.exe'), 'forum' => 'http://sourceforge.net/forum/?group_id=88285', 'sourcefilename' => 'ABC-win32-v3.1.exe' );
+?>
